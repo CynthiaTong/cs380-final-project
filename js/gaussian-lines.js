@@ -7,10 +7,9 @@ var hues = [];
 function setup() {
     createCanvas(windowWidth, windowHeight);
 
-    background(255);
     noStroke();
 
-    frameRate(6);
+    frameRate(3);
 
     colorMode(HSB);
 
@@ -18,12 +17,12 @@ function setup() {
         hues.push(h);
     }
 
-    for (var y = 0; y < height; y += random(30, 50)) {
+    for (var y = 0; y < height; y += random(30, 80)) {
         drawHorizontal(y, 0);
         yPoses.push(y);
     }
 
-    for (var x = 0; x < width; x += random(60, 50)) {
+    for (var x = 0; x < width; x += random(40, 70)) {
         drawVertical(x, 0);
         xPoses.push(x);
     }
@@ -46,7 +45,6 @@ function drawVertical(x, h) {
 var hVal = 0;
 
 function draw() {
-
     background(hues[hVal], 10, 95);
 
     for (var i in yPoses) {
@@ -61,6 +59,7 @@ function draw() {
 
     hVal ++;
     if (hVal >= hues.length) hVal = 0;
+
 }
 
 function windowResized() {

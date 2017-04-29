@@ -9,15 +9,17 @@ function setup() {
     for (var i=0; i < numParticles; i++) {
         particles.push(new Particle(random(10, width-10), random(10, height-10), createVector(-0.05, 0.05)));
     }
+
 }
 
 function draw() {
     background(0);
 
-    for (var i=0; i < particles.length-1; ++i) {
+    for (var i=0; i < particles.length-1; i++) {
         particles[i].draw(particles[i+1]);
     }
-
+    // draw the last particle
+    particles[particles.length-1].draw(undefined);
 }
 
 function randomColor() {
@@ -34,7 +36,6 @@ class Particle {
         this.pos = createVector(posX, posY);
         this.v = createVector(velocity.x, velocity.y);
         this.r = random(8, 15);
-        this.life = 255;
     }
 
     draw(pOther) {
@@ -52,23 +53,29 @@ class Particle {
         this.v.x += random(-0.02, 0.02);
         this.v.y += random(-0.02, 0.02);
 
+        if (abs(this.v.mag()) > 0.1) {
+            this.v.x *= 0.5;
+            this.v.y *= 0.5;
+        }
+
+
         this.border();
 
         this.pos.add(this.v);
-        // this.life --;
     }
 
     display(other) {
 
-        var dist = p5.Vector.dist(this.pos, other.pos);
-        var lineStroke = map(dist, 0, sqrt(width*width + height*height), 0, 250);
+        if (other) {
+            var dist = p5.Vector.dist(this.pos, other.pos);
+            var lineStroke = map(dist, 0, sqrt(width*width + height*height), 0, 250);
 
-        stroke(255 - lineStroke);
-        if (other)
+            stroke(255 - lineStroke);
             line(this.pos.x, this.pos.y, other.pos.x, other.pos.y);
+        }
 
         noStroke();
-        fill(255, this.life);
+        fill(255);
         ellipse(this.pos.x, this.pos.y, this.r, this.r);
 
     }

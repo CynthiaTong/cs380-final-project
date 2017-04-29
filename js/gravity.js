@@ -45,8 +45,11 @@ function createBoxes() {
 }
 
 function createCircles() {
+
+    var windowRatio = width/height;
+
     for (var x = width/14; x < width; x += width/7) {
-        for (var y = width/14; y < height; y += width/7) {
+        for (var y = width/18; y < height; y += width/7) {
             var circle = new Circle(x, y);
             shapes.push(circle);
         }

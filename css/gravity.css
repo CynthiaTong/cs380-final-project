@@ -22,7 +22,6 @@ body {
 .btns {
     width: 400px;
     height: 400px;
-    /*border: 1px solid black;*/
     position: absolute;
     top: 50%;
     margin-top: -200px;

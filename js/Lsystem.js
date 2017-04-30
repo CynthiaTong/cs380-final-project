@@ -1,12 +1,12 @@
 // L-SYSTEMS
 var x, y; // the current position of the turtle
 var currentangle = 0; // which way the turtle is pointing
-var step = 30; // how much the turtle moves with each 'F'
+var step = 30; // how much the turtle moves in each step
 var angle;
 var numloops = 5; // how many iterations to pre-compute
-var rules = []; // array for rules
-var thestring = 'A'; // "axiom" or start of the string
-var whereinstring = 0; // current position in string
+var rules = [];
+var str = 'A'; // "axiom" or start of the string
+var posInString = 0; // current position in string
 
 var showCanvas = false;
 
@@ -21,8 +21,8 @@ window.onload = function() {
     btn1.addEventListener("click", function() {
         // Sierpinski triangle
         angle = 60; // how much the turtle turns with a '-' or '+'
-        rules[0] = ['A', '-B+A+B-']; // first rule
-        rules[1] = ['B', '+A-B-A+']; // second rule
+        rules[0] = ['A', '-B+A+B-'];
+        rules[1] = ['B', '+A-B-A+'];
         x = 0;
         y = height-5;
 
@@ -32,7 +32,7 @@ window.onload = function() {
 
     btn2.addEventListener("click", function() {
         //Koch Curve
-        thestring = 'A';
+        str = 'A';
         angle = 90;
         step = 20;
         rules[0] = ['A', 'A-A+A+A-A'];
@@ -43,7 +43,7 @@ window.onload = function() {
     });
 
     btn3.addEventListener("click", function() {
-        thestring = 'A+A+A+A';
+        str = 'A+A+A+A';
         angle = 90;
         step = 30;
         rules[0] = ['A', 'AA+A-A+A+AA'];
@@ -64,7 +64,6 @@ function setup() {
 
 
 function hideBtnsShowCanvas() {
-    // container.style.visibility = "hidden";
     container.className = "fadeout";
     btn1.disabled = true;
     btn2.disabled = true;
@@ -78,7 +77,7 @@ function hideBtnsShowCanvas() {
         showCanvas = true;
         // populate the string
         for (var i = 0; i < numloops; i++) {
-          thestring = lindenmayer(thestring);
+          str = lindenmayer(str);
         }
 
     }, 800);
@@ -88,11 +87,11 @@ function draw() {
 
     if (showCanvas) {
         // draw the current character in the string:
-        drawChar(thestring[whereinstring]);
+        drawChar(str[posInString]);
 
-        whereinstring++;
-        if (whereinstring > thestring.length-1) {
-            whereinstring = 0;
+        posInString++;
+        if (posInString > str.length-1) {
+            posInString = 0;
         }
     }
 
@@ -108,14 +107,14 @@ function lindenmayer(s) {
       if (s[i] == rules[j][0])  {
         outputstring += rules[j][1]; // write
         ismatch = 1; // we have a match, so don't copy over symbol
-        break; // get outta this for() loop
+        break;
       }
     }
     // if nothing matches, just copy the symbol over.
     if (ismatch === 0) outputstring += s[i];
   }
 
-  return outputstring; // send out the modified string
+  return outputstring;
 }
 
 // draw character commands
@@ -135,20 +134,17 @@ function drawChar(k) {
     currentangle -= angle; // turn right
   }
 
-  // give me some random color values:
   var r = random(100, 250);
   var g = random(100, 250);
   var b = random(100, 250);
   var a = random(50, 100);
 
-  // pick a gaussian (D&D) distribution for the radius:
   var radius = 10;
   radius += random(0, windowWidth/80);
   radius += random(0, windowWidth/80);
   radius += random(0, windowWidth/80);
   radius = radius/3;
 
-  // draw the stuff:
   fill(r, g, b, a);
   ellipse(x, y, radius, radius);
 }

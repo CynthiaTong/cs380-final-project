@@ -1,11 +1,11 @@
 // L-SYSTEMS
-var x, y; // the current position of the turtle
-var currentangle = 0; // which way the turtle is pointing
-var step = 30; // how much the turtle moves in each step
+var x, y;
+var currentangle = 0;
+var step = 30;
 var angle;
 var numloops = 5; // how many iterations to pre-compute
 var rules = [];
-var str = 'A'; // "axiom" or start of the string
+var str = ''; // "axiom" or start of the string
 var posInString = 0; // current position in string
 
 var showCanvas = false;
@@ -20,6 +20,7 @@ window.onload = function() {
 
     btn1.addEventListener("click", function() {
         // Sierpinski triangle
+        str = 'A';
         angle = 60; // how much the turtle turns with a '-' or '+'
         rules[0] = ['A', '-B+A+B-'];
         rules[1] = ['B', '+A-B-A+'];
@@ -120,7 +121,7 @@ function lindenmayer(s) {
 // draw character commands
 function drawChar(k) {
 
-  if (k=="A" || k=='B') { // draw forward
+  if (k === 'A' || k === 'B') { // draw forward
     var x1 = x + step*cos(radians(currentangle));
     var y1 = y + step*sin(radians(currentangle));
     line(x, y, x1, y1); // connect the old and the new
@@ -128,9 +129,9 @@ function drawChar(k) {
     // update position:
     x = x1;
     y = y1;
-  } else if (k == '+') {
+  } else if (k === '+') {
     currentangle += angle; // turn left
-  } else if (k == '-') {
+  } else if (k === '-') {
     currentangle -= angle; // turn right
   }
 

@@ -1,5 +1,6 @@
 # cs380-final-project
 Final project repo for CS380 Drawing on the Web. 
+Live: [Final Project](http://i6.cims.nyu.edu/~xt405/380/final-project/)
 
 ## Project Outline 
 
